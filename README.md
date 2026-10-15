@@ -22,6 +22,17 @@ for the (few) differences and the bugs fixed along the way.
 
 ## Quick start
 
+### Download a release
+
+The [releases](https://github.com/nbigot/ministream-rs/releases) provide static binaries for Linux (x86_64, arm64,
+armv7) and Windows (x86_64), with the configuration templates:
+
+```sh
+$ tar -xzf ministream-rs_<version>_linux_amd64.tar.gz
+$ cd ministream-rs_<version>_linux_amd64
+$ ./ministream -config config-templates/minimal-inmemory/config/config.yaml
+```
+
 ### Build and run from the source code
 
 Requirements: a [Rust toolchain](https://rustup.rs/) (1.80 or newer).
@@ -50,6 +61,14 @@ $ cargo build --release --no-default-features
 ```
 
 ### Docker
+
+The image of each release is published for linux/amd64, linux/arm64 and linux/arm/v7:
+
+```sh
+$ docker run --name ministream -it -p 8080:8080 ghcr.io/nbigot/ministream-rs:latest
+```
+
+Or build it from the source code:
 
 ```sh
 $ docker build -t nbigot/ministream-rs .
@@ -216,6 +235,15 @@ The MySQL integration test runs when the environment variable `MINISTREAM_TEST_M
 ```sh
 $ MINISTREAM_TEST_MYSQL_DSN="root:my-secret-pw@tcp(127.0.0.1:3306)/ministream" cargo test --test api_mysql
 ```
+
+### Releasing
+
+1. Set the new version in `Cargo.toml` (`cargo check` updates `Cargo.lock`), and merge it into `main`.
+2. Push the tag of this version: `git tag v1.2.3 && git push origin v1.2.3`.
+
+The workflow `.github/workflows/release.yml` then builds the binaries and publishes them in a GitHub release,
+and publishes the docker image `ghcr.io/nbigot/ministream-rs:<version>` (and `latest`). The tag must match the
+version of `Cargo.toml`.
 
 ### Source code layout
 
