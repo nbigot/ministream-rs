@@ -1,0 +1,15 @@
+# syntax=docker/dockerfile:1
+# Image of a release: the binaries are built by the release workflow (.github/workflows/release.yml),
+# which copies them into image/<arch>/ (amd64, arm64, armv7) before building this image.
+FROM alpine:3.24
+ARG TARGETARCH
+ARG TARGETVARIANT
+RUN apk --no-cache add curl
+WORKDIR /app
+COPY --chmod=755 image/${TARGETARCH}${TARGETVARIANT}/ministream image/${TARGETARCH}${TARGETVARIANT}/generatepasswords ./
+COPY config-templates/docker/config /app/config
+COPY config-templates/docker/certs /app/certs
+COPY config-templates/docker/data /app/data
+EXPOSE 8080/tcp
+HEALTHCHECK CMD curl -f http://localhost:8080/api/v1/utils/ping || exit 1
+CMD ["/app/ministream", "-config", "/app/config/config.yaml"]
