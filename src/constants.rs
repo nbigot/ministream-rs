@@ -1,0 +1,60 @@
+//! Application wide constants (API error codes, header names, ...).
+
+// API error codes
+
+pub const ERROR_INVALID_STREAM_UUID: i32 = 1000;
+pub const ERROR_STREAM_UUID_NOT_FOUND: i32 = 1001;
+pub const ERROR_CANT_CREATE_STREAM: i32 = 1002;
+pub const ERROR_CANT_DELETE_STREAM: i32 = 1003;
+pub const ERROR_INVALID_JQ_FILTER: i32 = 1004;
+pub const ERROR_INVALID_ITERATOR_UUID: i32 = 1005;
+pub const ERROR_INVALID_PARAMETER_VALUE: i32 = 1006;
+pub const ERROR_CANT_DESERIALIZE_JSON: i32 = 1007;
+pub const ERROR_DUPLICATED_BATCH_ID: i32 = 1008;
+
+pub const ERROR_CANT_PUT_MESSAGE_INTO_STREAM: i32 = 1010;
+pub const ERROR_CANT_PUT_MESSAGES_INTO_STREAM: i32 = 1011;
+pub const ERROR_CANT_DESERIALIZE_JSON_RECORDS: i32 = 1012;
+pub const ERROR_INVALID_CREATE_RECORDS_ITERATOR_REQUEST: i32 = 1013;
+pub const ERROR_CANT_CREATE_RECORDS_ITERATOR: i32 = 1014;
+
+pub const ERROR_CANT_GET_MESSAGES_FROM_STREAM: i32 = 1020;
+
+pub const ERROR_CANT_CLOSE_STREAM_ITERATOR: i32 = 1030;
+pub const ERROR_STREAM_ITERATOR_NOT_FOUND: i32 = 1031;
+pub const ERROR_STREAM_ITERATOR_IS_BUSY: i32 = 1032;
+
+pub const ERROR_CANT_REBUILD_STREAM_INDEX: i32 = 1040;
+
+pub const ERROR_INVALID_JOB_UUID: i32 = 1100;
+pub const ERROR_JOB_UUID_NOT_FOUND: i32 = 1101;
+pub const ERROR_CANT_CREATE_JOB: i32 = 1102;
+
+pub const ERROR_JWT_MISSING_OR_MALFORMED: i32 = 1200;
+pub const ERROR_JWT_INVALID_OR_EXPIRED: i32 = 1201;
+pub const ERROR_JWT_NOT_ENABLED: i32 = 1202;
+pub const ERROR_JWT_RBAC_UNKNOWN_ROLE: i32 = 1210;
+pub const ERROR_RBAC_INVALID_RULE: i32 = 1211;
+pub const ERROR_RBAC_FORBIDDEN: i32 = 1212;
+pub const ERROR_RBAC_NOT_ENABLED: i32 = 1213;
+pub const ERROR_AUTH_INTERNAL_ERROR: i32 = 1220;
+pub const ERROR_WRONG_CREDENTIALS: i32 = 1230;
+
+// JWT claims
+
+pub const JWT_CLAIMS_ACCOUNT_KEY: &str = "account";
+pub const JWT_CLAIMS_USER_KEY: &str = "user";
+pub const JWT_CLAIMS_ROLES_KEY: &str = "roles";
+pub const JWT_CLAIMS_SUPERUSER_KEY: &str = "superuser";
+
+// HTTP headers
+
+pub const HEADER_API_KEY: &str = "API-KEY";
+pub const HEADER_ACCESS_KEY_ID: &str = "ACCESS-KEY-ID";
+pub const HEADER_SECRET_ACCESS_KEY: &str = "SECRET-ACCESS-KEY";
+pub const HEADER_BATCH_ID: &str = "x-ministream-batch-id";
+
+// HTTP params
+
+pub const PARAM_NAME_STREAM_UUID: &str = "streamuuid";
+pub const PARAM_NAME_STREAM_ITERATOR_UUID: &str = "streamiteratoruuid";

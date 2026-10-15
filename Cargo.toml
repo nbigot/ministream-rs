@@ -1,0 +1,60 @@
+[package]
+name = "ministream"
+version = "1.0.0"
+edition = "2021"
+rust-version = "1.80"
+description = "Ministream is a simple real-time data stream service."
+license = "MIT"
+repository = "https://github.com/nbigot/ministream-rs"
+readme = "README.md"
+keywords = ["stream", "event", "queue", "http", "jq"]
+categories = ["web-programming::http-server"]
+default-run = "ministream"
+
+[features]
+default = ["mysql"]
+# MySQL storage provider (pulls sqlx). Disable with `--no-default-features` for a leaner binary.
+mysql = ["dep:sqlx"]
+
+[dependencies]
+async-trait = "0.1"
+axum = { version = "0.8", features = ["macros"] }
+axum-server = { version = "0.7", features = ["tls-rustls-no-provider"] }
+chrono = { version = "0.4", features = ["serde"] }
+futures = "0.3"
+hex = "0.4"
+hmac = "0.12"
+jaq-core = "2"
+jaq-json = { version = "1", features = ["serde_json"] }
+jaq-std = "2"
+jsonwebtoken = "9"
+md-5 = "0.10"
+mimalloc = { version = "0.1", default-features = false }
+parking_lot = "0.12"
+pbkdf2 = { version = "0.12", default-features = false, features = ["hmac"] }
+rand = "0.9"
+regex = "1"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12", "logging"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yaml_ng = "0.10"
+sha1 = "0.10"
+sha2 = "0.10"
+sqlx = { version = "0.8", default-features = false, features = ["runtime-tokio", "tls-rustls-ring-webpki", "mysql", "chrono"], optional = true }
+subtle = "2"
+sysinfo = { version = "0.37", default-features = false, features = ["system"] }
+thiserror = "2"
+tokio = { version = "1", features = ["full"] }
+tower = { version = "0.5", features = ["util"] }
+tower-http = { version = "0.6", features = ["cors"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+
+[dev-dependencies]
+http-body-util = "0.1"
+tempfile = "3"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true

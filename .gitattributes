@@ -1,0 +1,18 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+*.rs text eol=lf
+*.sh text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
+*.json text eol=lf
+*.png binary
+
+# Mark example configurations as documentation to prevent false-positive security warnings
+# These are intentionally public example credentials and certificates
+config-templates/** linguist-documentation
+config-templates/**/secrets/** linguist-documentation
+config-templates/**/*.pem linguist-documentation
+config-templates/**/certs/** linguist-documentation

@@ -1,0 +1,1443 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This documentation describes MiniStream API",
+        "title": "MiniStream API",
+        "contact": {},
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/nbigot/ministream-rs/blob/main/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/api/v1/account/": {
+            "get": {
+                "description": "Get account details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Get account",
+                "operationId": "account-get",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/web.JSONResult"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/web.GetAccountHTTPJsonResult"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/account/login": {
+            "get": {
+                "description": "Account login",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Account login",
+                "operationId": "account-login",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API-KEY",
+                        "name": "API-KEY",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/stream.LoginAccountResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/account/validate": {
+            "get": {
+                "description": "Log in a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Validate API Key",
+                "operationId": "account-validate-api-key",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "API-KEY",
+                        "name": "API-KEY",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/web.JSONResultSuccess"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/jwt/revoke": {
+            "post": {
+                "description": "Reload server authentication configuration",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Reload server authentication configuration",
+                "operationId": "server-jwt-revoke-all",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/web.JSONResultSuccess"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/server/restart": {
+            "post": {
+                "description": "Restart server",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Restart server",
+                "operationId": "server-restart",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/web.JSONResultSuccess"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/server/shutdown": {
+            "post": {
+                "description": "Shutdown server",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Shutdown server",
+                "operationId": "server-shutdown",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/web.JSONResultSuccess"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/": {
+            "post": {
+                "description": "Create a new stream",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Create a stream",
+                "operationId": "stream-create",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/types.StreamInfo"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}/index/rebuild": {
+            "post": {
+                "description": "Build or rebuild the stream index",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Rebuild the stream index",
+                "operationId": "stream-rebuild-index",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/stream.RebuildStreamIndexResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}": {
+            "get": {
+                "description": "Get information for the given stream UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Get stream information",
+                "operationId": "stream-get-information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/types.StreamInfo"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a stream",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Delete a stream",
+                "operationId": "stream-delete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/web.JSONResultSuccess"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}/iterator": {
+            "post": {
+                "description": "Create a record iterator to get records from a given position for the given stream UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Create stream records iterator",
+                "operationId": "stream-create-records-iterator",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/stream.CreateRecordsIteratorResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}/iterator/{streamiteratoruuid}": {
+            "delete": {
+                "description": "Close an existing stream records iterator by it's UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Close a stream records iterator",
+                "operationId": "stream-close-records-iterator",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream iterator UUID",
+                        "name": "streamiteratoruuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/stream.CloseRecordsIteratorResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}/iterator/{streamiteratoruuid}/records": {
+            "get": {
+                "description": "Get records for the given stream UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Get stream records",
+                "operationId": "stream-get-records",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream iterator UUID",
+                        "name": "streamiteratoruuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "example": 10,
+                        "description": "int max records",
+                        "name": "maxRecords",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/stream.GetStreamRecordsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}/iterator/{streamiteratoruuid}/stats": {
+            "get": {
+                "description": "Get statistics for the given stream UUID and stream record iterator UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Get statistics about a stream records iterator",
+                "operationId": "stream-get-records-iterator-stats",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream iterator UUID",
+                        "name": "streamiteratoruuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/stream.GetRecordsIteratorStatsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}/properties": {
+            "get": {
+                "description": "Get the properties for the given stream UUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Get stream properties",
+                "operationId": "stream-get-properties",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/types.StreamProperties"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Set and replace properties for the given stream",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Set stream properties",
+                "operationId": "stream-set-properties",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/types.StreamProperties"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "update properties for the given stream",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Update stream properties",
+                "operationId": "stream-update-properties",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/types.StreamProperties"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}/record": {
+            "put": {
+                "description": "Put a single record into a stream",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Put one record into a stream",
+                "operationId": "stream-put-record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/stream.PutStreamRecordsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/stream/{streamuuid}/records": {
+            "put": {
+                "description": "Put one or multiple records into a stream",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Put one or multiple records into a stream",
+                "operationId": "stream-put-records",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "format": "uuid.UUID",
+                        "description": "Stream UUID",
+                        "name": "streamuuid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/stream.PutStreamRecordsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/streams/": {
+            "get": {
+                "description": "Get the list of all streams UUIDs",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "List streams",
+                "operationId": "stream-list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "\".name == \\\"test 8\\\"\"",
+                        "description": "string jq filter",
+                        "name": "jq",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/streams/properties": {
+            "get": {
+                "description": "Get the streams UUIDs and their properties",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "List streams properties",
+                "operationId": "stream-list-and-properties",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "\".name == \\\"test 8\\\"\"",
+                        "description": "string jq filter",
+                        "name": "jq",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/web.JSONResultListStreamsProperties"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/login": {
+            "get": {
+                "description": "Logs user into the system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logs user into the system",
+                "operationId": "user-login",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ACCESS-KEY-ID",
+                        "name": "ACCESS-KEY-ID",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "SECRET-ACCESS-KEY",
+                        "name": "SECRET-ACCESS-KEY",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/stream.LoginUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/": {
+            "get": {
+                "description": "Get the list of users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "List users",
+                "operationId": "user-list",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/web.JSONResultListUsers"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/utils/pbkdf2": {
+            "post": {
+                "description": "Generate hash from password",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Generate hash from password",
+                "operationId": "utils-pbkdf2",
+                "parameters": [
+                    {
+                        "format": "Pbkdf2Payload",
+                        "description": "Pbkdf2Payload",
+                        "name": "payload",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/web.Pbkdf2Payload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/web.JSONResultPbkdf2"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.APIError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/utils/ping": {
+            "get": {
+                "description": "Ping server",
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "Utils"
+                ],
+                "summary": "Ping server",
+                "operationId": "utils-ping",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "github_com_nbigot_ministream_web_apierror.APIError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "application-specific error code",
+                    "type": "integer"
+                },
+                "details": {
+                    "description": "application-level error details that best describes the error, for debugging",
+                    "type": "string"
+                },
+                "error": {
+                    "description": "application-level error message, for debugging",
+                    "type": "string"
+                },
+                "streamUUID": {
+                    "description": "stream uuid",
+                    "type": "string"
+                },
+                "validationErrors": {
+                    "description": "list of errors",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_nbigot_ministream_web_apierror.ValidationError"
+                    }
+                }
+            }
+        },
+        "github_com_nbigot_ministream_web_apierror.ValidationError": {
+            "type": "object",
+            "properties": {
+                "failedField": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.CloseRecordsIteratorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "streamIteratorUUID": {
+                    "type": "string"
+                },
+                "streamUUID": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.CreateRecordsIteratorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "streamIteratorUUID": {
+                    "type": "string"
+                },
+                "streamUUID": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.GetRecordsIteratorStatsResponse": {
+            "type": "object",
+            "properties": {
+                "lastRecordIdRead": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "streamIteratorUUID": {
+                    "type": "string"
+                },
+                "streamUUID": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.GetStreamRecordsResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "countErrors": {
+                    "type": "integer"
+                },
+                "countSkipped": {
+                    "type": "integer"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "lastRecordIdRead": {
+                    "type": "integer"
+                },
+                "records": {
+                    "type": "array",
+                    "items": {}
+                },
+                "remain": {
+                    "type": "boolean"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "streamIteratorUUID": {
+                    "type": "string"
+                },
+                "streamUUID": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.LoginAccountResponse": {
+            "type": "object",
+            "properties": {
+                "jwt": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.LoginUserResponse": {
+            "type": "object",
+            "properties": {
+                "jwt": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.PutStreamRecordsResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "messageIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                },
+                "streamUUID": {
+                    "type": "string"
+                }
+            }
+        },
+        "stream.RebuildStreamIndexResponse": {
+            "type": "object",
+            "properties": {
+                "duration": {
+                    "type": "integer"
+                },
+                "indexStats": {},
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "streamUUID": {
+                    "type": "string"
+                }
+            }
+        },
+        "types.StreamInfo": {
+            "type": "object",
+            "properties": {
+                "creationDate": {
+                    "type": "string"
+                },
+                "ingestedMessages": {
+                    "description": "messages that have been ingested in the stream",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/types.StreamMessagesInfo"
+                        }
+                    ]
+                },
+                "lastUpdate": {
+                    "type": "string"
+                },
+                "properties": {
+                    "$ref": "#/definitions/types.StreamProperties"
+                },
+                "readableMessages": {
+                    "description": "messages that are readable by a consumer",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/types.StreamMessagesInfo"
+                        }
+                    ]
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "4ce589e2-b483-467b-8b59-758b339801db"
+                }
+            }
+        },
+        "types.StreamMessagesInfo": {
+            "type": "object",
+            "properties": {
+                "cptMessages": {
+                    "type": "integer",
+                    "example": 12345
+                },
+                "fastMsgTimestamp": {
+                    "type": "string"
+                },
+                "firstMsgId": {
+                    "type": "integer"
+                },
+                "firstMsgTimestamp": {
+                    "type": "string"
+                },
+                "lastMsgId": {
+                    "type": "integer"
+                },
+                "sizeInBytes": {
+                    "type": "integer",
+                    "example": 4567890
+                }
+            }
+        },
+        "types.StreamProperties": {
+            "type": "object",
+            "additionalProperties": true
+        },
+        "web.GetAccountHTTPJsonResult": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "123489e2-b483-467b-8b59-758b33981234"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "account name"
+                }
+            }
+        },
+        "web.JSONResult": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "data": {},
+                "message": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "web.JSONResultListStreamsProperties": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "result": {
+                    "$ref": "#/definitions/web.JSONResultListStreamsPropertiesResult"
+                }
+            }
+        },
+        "web.JSONResultListStreamsPropertiesResult": {
+            "type": "object",
+            "properties": {
+                "rows": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/web.JSONResultListStreamsPropertiesResultRow"
+                    }
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 5
+                }
+            }
+        },
+        "web.JSONResultListStreamsPropertiesResultRow": {
+            "type": "object",
+            "properties": {
+                "cptMessages": {
+                    "type": "integer",
+                    "example": 12345
+                },
+                "creationDate": {
+                    "type": "string"
+                },
+                "firstMsgId": {
+                    "type": "integer"
+                },
+                "lastMsgId": {
+                    "type": "integer"
+                },
+                "lastUpdate": {
+                    "type": "string"
+                },
+                "properties": {
+                    "$ref": "#/definitions/types.StreamProperties"
+                },
+                "sizeInBytes": {
+                    "type": "integer",
+                    "example": 4567890
+                },
+                "uuid": {
+                    "type": "string",
+                    "example": "4ce589e2-b483-467b-8b59-758b339801db"
+                }
+            }
+        },
+        "web.JSONResultListUsers": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "web.JSONResultPbkdf2": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "digest": {
+                    "type": "string"
+                },
+                "hash": {
+                    "type": "string"
+                },
+                "iterations": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "success"
+                },
+                "salt": {
+                    "type": "string"
+                }
+            }
+        },
+        "web.JSONResultSuccess": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 200
+                },
+                "message": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "web.Pbkdf2Payload": {
+            "type": "object",
+            "required": [
+                "digest",
+                "password",
+                "salt"
+            ],
+            "properties": {
+                "digest": {
+                    "type": "string",
+                    "example": "sha256"
+                },
+                "iterations": {
+                    "type": "integer",
+                    "maximum": 10000,
+                    "minimum": 1
+                },
+                "password": {
+                    "type": "string",
+                    "example": "thisismysecretpassword"
+                },
+                "salt": {
+                    "type": "string",
+                    "example": "thisisarandomsalt"
+                }
+            }
+        }
+    }
+}
